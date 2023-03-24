@@ -7,57 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entscheidungsbaum</title>
     <link rel="stylesheet" href="./css/tree.css">
+    <link rel="stylesheet" href="./css/stylesheet.css">
 </head>
 
 <body>
-    <script src="./js/new_script.js"></script>
-    <!-- 
-        <ul class="tree">
-            <li> <span>Home</span>
-                <ul>
-                    <li> <span>About us</span>
-                        <ul>
-                            <li> <span>Our history</span>
-                                <ul>
-                                    <li><span>Founder</span></li>
-                                </ul>
-                            </li>
-                            <li> <span>Our board</span>
-                                <ul>
-                                    <li><span>Brad Whiteman</span></li>
-                                    <li><span>Cynthia Tolken</span></li>
-                                    <li><span>Bobby Founderson</span></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li> <span>Our products</span>
-                        <ul>
-                            <li> <span>The Widget 2000™</span>
-                                <ul>
-                                    <li><span>Order form</span></li>
-                                </ul>
-                            </li>
-                            <li> <span>The McGuffin V2</span>
-                                <ul>
-                                    <li><span>Order form</span></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li> <span>Contact us</span>
-                        <ul>
-                            <li> <span>Social media</span>
-                                <ul>
-                                    <li><span>Facebook</span></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-     -->
+    <script src="./js/new_script.js" defer></script>
+    <div id="inputContainer">
+        <label for="data">Wähle deine *.csv-Datei aus:</label>
+        <input type="file"
+               id="data" name="data"
+               accept=".csv">
+        <button id="drawTree">Entscheidungsbaum erstellen</button>
+    </div>
+
+    <div id="treeContainer"></div>
 </body>
 
 </html>

@@ -1,4 +1,6 @@
-class Leave {
+let tree = undefined
+
+class Leaf {
     constructor(previousDecision, decision, samples) {
         this.previousDecision = previousDecision
         this.decision = decision
@@ -13,9 +15,9 @@ class Node {
         this.previousDecision = previousDecision
         this.attribute = attribute
         this.samples = samples
-        this.children = children
         this.sampleQuantity = samples.length
         this.entropy = entropyOf(samples)
+        this.children = children
     }
 }
 
@@ -117,10 +119,10 @@ function areSameDecision(samples) {
     return areSameDecision
 }
 
-function decisionTree(samples, attributes, previousDecision) {
+function decisionTree(samples, attributes, previousDecision = '') {
     if (areSameDecision(samples)) {
         let decision = attributes.at(-1) + ": " + samples[0].at(-1)
-        return new Leave(previousDecision, decision, samples)
+        return new Leaf(previousDecision, decision, samples)
     } else if (attributes.length == 1) {
         let values = []
         samples.forEach(sample => {
@@ -128,7 +130,7 @@ function decisionTree(samples, attributes, previousDecision) {
         });
         mostFrequentValue = getMostFrequent(values)
         let decision = attributes.at(-1) + ": " + mostFrequentValue
-        return new Leave(previousDecision, decision, samples)
+        return new Leaf(previousDecision, decision, samples)
     } else {
         let children = []
         let bestAttributeIndex = mostInformativeAttribute(samples)
@@ -168,8 +170,101 @@ function decisionTree(samples, attributes, previousDecision) {
 }
 
 function treeToHtml(root) {
-    
+    const treeContainer = document.getElementById('treeContainer')
+    let rootHTML = document.createElement('ul')
+    rootHTML.classList.add('tree')
+    if (root instanceof Node) {
+        rootHTML.appendChild(getNodeHTML(root))
+    } else if (root instanceof Leaf) {
+        rootHTML.appendChild(getLeafHTML(root))
+    }
+    treeContainer.replaceChildren()
+    treeContainer.appendChild(rootHTML)
 }
+
+function getNodeHTML(node) {
+    let nodeHtml = document.createElement('li')
+    let content = document.createElement('span')
+    content.classList.add('node')
+    let previousDecision = document.createElement('p')
+    previousDecision.textContent = String(node.previousDecision)
+    let attribute = document.createElement('p')
+    attribute.textContent = 'Nächste Entscheidung: ' + String(node.attribute)
+    let sampleQuantity = document.createElement('p')
+    sampleQuantity.textContent = 'Anzahl der Trainingsdaten: ' + String(node.sampleQuantity)
+    let entropy = document.createElement('p')
+    entropy.textContent = 'Entropie: ' + String(Math.round(node.entropy*100)/100)
+    content.appendChild(previousDecision)
+    content.appendChild(attribute)
+    content.appendChild(sampleQuantity)
+    content.appendChild(entropy)
+    nodeHtml.appendChild(content)
+    
+    let children = document.createElement('ul')
+    node.children.forEach(child => {
+        if (child instanceof Node) {
+            children.appendChild(getNodeHTML(child))
+        } else if (child instanceof Leaf) {
+            children.appendChild(getLeafHTML(child))
+        }
+    });
+
+    nodeHtml.appendChild(children)
+
+    return nodeHtml
+}
+
+function getLeafHTML(leaf) {
+    let leafHTML = document.createElement('li')
+    let content = document.createElement('span')
+    content.classList.add('leaf')
+    let previousDecision = document.createElement('p')
+    previousDecision.textContent = String(leaf.previousDecision)
+    let decision = document.createElement('p')
+    decision.textContent = 'Getroffene Entscheidung: ' + String(leaf.decision)
+    let sampleQuantity = document.createElement('p')
+    sampleQuantity.textContent = 'Anzahl der Trainingsdaten: ' + String(leaf.sampleQuantity)
+    let entropy = document.createElement('p')
+    entropy.textContent = 'Entropie: ' + String(Math.round(leaf.entropy*100)/100)
+    content.appendChild(previousDecision)
+    content.appendChild(decision)
+    content.appendChild(sampleQuantity)
+    content.appendChild(entropy)
+
+    leafHTML.appendChild(content)
+
+    return leafHTML
+}
+
+let file = document.getElementById('data')
+let data = undefined
+
+file.addEventListener("change", function () {
+    var reader = new FileReader()
+    reader.onload = function() {
+    data = this.result.split(/[\n\r]/)
+    console.log(data)
+      }
+    reader.readAsText(this.files[0])
+});
+
+let drawButton = document.getElementById('drawTree')
+drawButton.addEventListener('click', function() {
+    if (data != undefined) {
+        let attributes = data[0].split(',')
+        let dataCopy = data.slice(1, data.length)
+        let samples = []
+        console.log(attributes)
+        console.log(dataCopy)
+        dataCopy.forEach(datum => {
+            samples.push(datum.split(','))
+        });
+        console.log(samples)
+        console.log(attributes)
+        let tree = decisionTree(samples, attributes)
+        treeToHtml(tree)
+    }
+})
 
 samples = []
 samples.push(["nein", "ja", "nein", "ja"])
@@ -178,6 +273,8 @@ samples.push(["ja", "nein", "ja", "nein"])
 samples.push(["nein", "nein", "nein", "ja"])
 samples.push(["nein", "nein", "ja", "nein"])
 samples.push(["ja", "ja", "nein", "nein"])
+console.log(samples)
 
-let tree = decisionTree(samples, ["Wind", "Regen", "Schnee", "Fahrrad"], "")
+let treeTest = decisionTree(samples, ["Wind", "Regen", "Schnee", "Fahrrad"], "")
+treeToHtml(treeTest)
 console.log("done")
