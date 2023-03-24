@@ -243,7 +243,6 @@ file.addEventListener("change", function () {
     var reader = new FileReader()
     reader.onload = function() {
     data = this.result.split(/[\n\r]/)
-    console.log(data)
       }
     reader.readAsText(this.files[0])
 });
@@ -254,27 +253,10 @@ drawButton.addEventListener('click', function() {
         let attributes = data[0].split(',')
         let dataCopy = data.slice(1, data.length)
         let samples = []
-        console.log(attributes)
-        console.log(dataCopy)
         dataCopy.forEach(datum => {
             samples.push(datum.split(','))
         });
-        console.log(samples)
-        console.log(attributes)
         let tree = decisionTree(samples, attributes)
         treeToHtml(tree)
     }
 })
-
-samples = []
-samples.push(["nein", "ja", "nein", "ja"])
-samples.push(["ja", "nein", "nein", "ja"])
-samples.push(["ja", "nein", "ja", "nein"])
-samples.push(["nein", "nein", "nein", "ja"])
-samples.push(["nein", "nein", "ja", "nein"])
-samples.push(["ja", "ja", "nein", "nein"])
-console.log(samples)
-
-let treeTest = decisionTree(samples, ["Wind", "Regen", "Schnee", "Fahrrad"], "")
-treeToHtml(treeTest)
-console.log("done")
