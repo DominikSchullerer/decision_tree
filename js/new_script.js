@@ -243,6 +243,7 @@ file.addEventListener("change", function () {
     var reader = new FileReader()
     reader.onload = function() {
     data = this.result.split(/[\n\r]/)
+    data = data.filter((str) => str != '')
       }
     reader.readAsText(this.files[0])
 });
