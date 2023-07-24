@@ -274,8 +274,8 @@ function getNodeHTML(node) {
     content.classList.add('node')
 
     /* Prepare the entries of content */
-    let previousDecision = document.createElement('p')
-    previousDecision.textContent = String(node.previousDecision)
+    // let previousDecision = document.createElement('p')
+    // previousDecision.textContent = String(node.previousDecision)
     let attribute = document.createElement('p')
     attribute.textContent = 'Nächste Entscheidung: ' + String(node.attribute)
     let sampleQuantity = document.createElement('p')
@@ -284,10 +284,10 @@ function getNodeHTML(node) {
     entropy.textContent = 'Entropie: ' + String(Math.round(node.entropy*100)/100)
 
     /* Fill content with its entries */
-    content.appendChild(previousDecision)
+    // content.appendChild(previousDecision)
     content.appendChild(attribute)
-    content.appendChild(sampleQuantity)
     content.appendChild(entropy)
+    content.appendChild(sampleQuantity)
 
     /* Fill the list element with its content */
     nodeHtml.appendChild(content)
@@ -327,8 +327,8 @@ function getLeafHTML(leaf) {
     content.classList.add('leaf')
 
     /* Prepare the entries of content */
-    let previousDecision = document.createElement('p')
-    previousDecision.textContent = String(leaf.previousDecision)
+    // let previousDecision = document.createElement('p')
+    // previousDecision.textContent = String(leaf.previousDecision)
     let decision = document.createElement('p')
     decision.textContent = 'Getroffene Entscheidung: ' + String(leaf.decision)
     let sampleQuantity = document.createElement('p')
@@ -337,10 +337,10 @@ function getLeafHTML(leaf) {
     entropy.textContent = 'Entropie: ' + String(Math.round(leaf.entropy*100)/100)
 
     /* Fill content with its entries */
-    content.appendChild(previousDecision)
+    // content.appendChild(previousDecision)
     content.appendChild(decision)
-    content.appendChild(sampleQuantity)
     content.appendChild(entropy)
+    content.appendChild(sampleQuantity)
 
     /* Fill the list element with its content */
     leafHTML.appendChild(content)
