@@ -279,7 +279,7 @@ function getNodeHTML(node) {
     let attribute = document.createElement('p')
     attribute.textContent = 'Nächste Entscheidung: ' + String(node.attribute)
     let sampleQuantity = document.createElement('p')
-    sampleQuantity.textContent = 'Anzahl der Trainingsdaten: ' + String(node.sampleQuantity)
+    sampleQuantity.textContent = 'Anzahl Trainingsdatensätze: ' + String(node.sampleQuantity)
     let entropy = document.createElement('p')
     entropy.textContent = 'Entropie: ' + String(Math.round(node.entropy*100)/100)
 
@@ -332,7 +332,7 @@ function getLeafHTML(leaf) {
     let decision = document.createElement('p')
     decision.textContent = 'Getroffene Entscheidung: ' + String(leaf.decision)
     let sampleQuantity = document.createElement('p')
-    sampleQuantity.textContent = 'Anzahl der Trainingsdaten: ' + String(leaf.sampleQuantity)
+    sampleQuantity.textContent = 'Anzahl Trainingsdatensätze: ' + String(leaf.sampleQuantity)
     let entropy = document.createElement('p')
     entropy.textContent = 'Entropie: ' + String(Math.round(leaf.entropy*100)/100)
 
